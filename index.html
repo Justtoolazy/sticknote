@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      height: 100vh;
+      margin: 0;
+      overflow: scroll;
+      background-color: #f0f0f0;
+    }
+    canvas {
+      position: absolute;
+      border: 2px solid #329500;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      background-color: #f9ffc1;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="freedomWall"></canvas>
+</body>
+<script>
+  const canvas = document.getElementById('freedomWall');
+  const ctx = canvas.getContext('2d');
+  let noteNum = 15;
+  let canvasSize = 1000 + ((noteNum/25) * 2500);
+  console.log(((noteNum/25) * 1000));
+  canvas.width = canvasSize;
+  canvas.height = canvasSize;
+
+  function stickyNote(){
+    ctx.fillStyle = '#ffeb3b';
+    ctx.fillRect(100, 100, 250, 200);
+    ctx.fillRect(500, 500, 250, 200);
+    ctx.strokeStyle = '#000';
+  }
+  
+  function drawGrid(ctx, canvasSize, gap){
+    ctx.strokeStyle = 'red';  
+    let highlighGrid = 0;
+    for(let xy = gap; xy < canvasSize; xy += gap){
+      ctx.beginPath();
+      if(highlighGrid == 4){
+        ctx.lineWidth = 0.5;
+        highlighGrid = 0;
+      } else {
+        ctx.lineWidth = 0.3;
+        highlighGrid++;
+      }
+      ctx.moveTo(xy, 0);
+      ctx.lineTo(xy, canvasSize);
+      ctx.moveTo(0, xy);
+      ctx.lineTo(canvasSize, xy);
+      ctx.stroke();
+    }
+  }
+  function drawAll(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawGrid(ctx, canvasSize, 20);
+    stickyNote();
+  }
+
+  drawAll();
+  
+</script>
+</html>
